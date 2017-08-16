@@ -2,6 +2,7 @@ require('log4js').configure(__dirname + '/log4js.json');
 var config = {
     development: {
         port: 3000,
+        lng: 'zh_CN',
         modules: {
             verifycode: {
                 module: process.cwd() + '/lib'
@@ -10,8 +11,8 @@ var config = {
     },
     production: {
         port: 3000,
+        lng: 'zh_CN',
         redis: 'redis://redis.db',
-        VerifyCodeExpire: 3600,
         modules: {
             verifycode: {
                 module: process.cwd() + '/lib'

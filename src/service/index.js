@@ -1,6 +1,7 @@
 import Promise from 'bluebird';
 import _redis from 'redis';
 import event from 'jm-event';
+import log from 'jm-log4js';
 import consts from '../consts';
 
 /**
@@ -14,6 +15,7 @@ class VerifyCode {
      */
     constructor (opts = {}) {
         event.enableEvent(this);
+        this.logger = log.getLogger('verifyCode');
         this.ready = false;
         this.secret = opts.secret || '';
         this.verifyCodeKey = opts.verifyCodeKey || consts.VerifyCodeKey;
@@ -85,6 +87,7 @@ class VerifyCode {
             redis.hset(self.verifyCodeKey, opts.key,
                 JSON.stringify(opts), function (err, doc) {
                     if(err) throw err;
+                    self.logger.debug('add %j', opts);
                     resolve(opts);
                 });
         });
@@ -112,24 +115,24 @@ class VerifyCode {
         return new Promise(function (resolve, reject) {
             redis.hget(self.verifyCodeKey, key, function (err, doc) {
                 if (err) throw err;
-                if (doc) {
-                    try {
-                        doc = JSON.parse(doc);
-                        if (doc.expire &&
-                            doc.time + doc.expire * 1000 < Date.now()) {
-                            self
-                                .delete(key)
-                                .then(function (doc) {
-                                })
-                            ;
-                        } else {
-                            if(code === doc.code) return resolve(doc);
-                        }
-                    } catch (e) {
-                        throw e;
+                if (!doc) return resolve(false);
+                try {
+                    doc = JSON.parse(doc);
+                    if (doc.expire &&
+                        doc.time + doc.expire * 1000 < Date.now()) {
+                        self
+                            .delete(key)
+                            .then(function (doc) {
+                            })
+                        ;
+                        self.logger.debug('expired: %j', doc);
+                    } else {
+                        if(code === doc.code) return resolve(doc);
                     }
+                    return resolve(false);
+                } catch (e) {
+                    throw e;
                 }
-                resolve(false);
             });
         });
     }

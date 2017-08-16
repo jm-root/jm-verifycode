@@ -7,6 +7,7 @@ let ms = new MS();
 module.exports = function (service, opts = {}) {
     let router = ms.router();
     let routes = service.routes;
+    let logger = service.logger;
 
     routes.getCode = function (opts, cb) {
         let key = opts.params.key;
@@ -40,7 +41,8 @@ module.exports = function (service, opts = {}) {
                 cb(null, doc);
             })
             .catch(function (err) {
-                cb(err, Err.FAIL);
+                logger.error(err.stack);
+                cb(null, Err.FAIL);
             });
     };
 
