@@ -1,13 +1,25 @@
 import _ from 'lodash';
 import error from 'jm-err';
 import MS from 'jm-ms-core';
+import consts from '../consts'
 let Err = error.Err;
+Err = _.defaults(Err,consts.Err)
 let ms = new MS();
 
 module.exports = function (service, opts = {}) {
     let router = ms.router();
     let routes = service.routes;
     let logger = service.logger;
+
+    let t = function (doc, lng) {
+      if (doc && lng && doc.err && doc.msg) {
+        return {
+          err: doc.err,
+          msg: service.t(doc.msg, lng) || Err.t(doc.msg, lng) || doc.msg
+        }
+      }
+      return doc
+    }
 
     routes.getCode = function (opts, cb) {
         let key = opts.params.key;
@@ -38,6 +50,7 @@ module.exports = function (service, opts = {}) {
         service.check(key, code)
             .then(function (doc) {
                 routes.emit('checkVerifyCode', opts, doc);
+                if(!doc) return cb(null,t(Err.FA_INVALID_VERIFYCODE, opts.lng))
                 cb(null, doc);
             })
             .catch(function (err) {

@@ -3,6 +3,7 @@ import _redis from 'redis';
 import event from 'jm-event';
 import log from 'jm-log4js';
 import consts from '../consts';
+import t from '../locale'
 
 /**
  * Class representing a verifyCode.
@@ -17,6 +18,7 @@ class VerifyCode {
         event.enableEvent(this);
         this.logger = log.getLogger('verifyCode');
         this.ready = false;
+        this.t = t
         this.secret = opts.secret || '';
         this.verifyCodeKey = opts.verifyCodeKey || consts.VerifyCodeKey;
         this.verifyCodeExpire = opts.verifyCodeExpire || 60;
