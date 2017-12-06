@@ -1,3 +1,3 @@
 export default {
-  'error verifycode': '验证码错误'
+  'invalid verifycode': '验证码错误'
 }

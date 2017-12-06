@@ -5,7 +5,7 @@ export default {
 	Err:{
 		FA_INVALID_VERIFYCODE: {
 			err: ERRCODE++,
-			msg: 'error verifycode'
+			msg: 'invalid verifycode'
 		}
 	}
 };
