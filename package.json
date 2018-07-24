@@ -1,6 +1,6 @@
 {
   "name": "jm-verifycode",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "verify code",
   "main": "./lib/index",
   "scripts": {
@@ -26,8 +26,7 @@
   "homepage": "https://github.com/jm-root/jm-verifycode",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "jm-ms-help": "^1.0.0",
-    "jm-server": "^1.0.2",
+    "jm-server": "^2.0.1",
     "redis": "^2.7.1"
   },
   "devDependencies": {
