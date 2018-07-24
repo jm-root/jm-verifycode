@@ -1,12 +1,29 @@
 {
   "appenders": [
     {
+      "type": "dateFile",
+      "filename": "logs/console",
+      "pattern": "-yyyyMMdd.log",
+      "alwaysIncludePattern": true,
+      "category": [
+        "console"
+      ]
+    },
+    {
+      "type": "dateFile",
+      "filename": "logs/verifycode",
+      "pattern": "-yyyyMMdd.log",
+      "alwaysIncludePattern": true,
+      "category": [
+        "verifycode"
+      ]
+    },
+    {
       "type": "console"
     }
   ],
   "replaceConsole": true,
   "levels": {
-    "jm-ms-ws:server": "info",
-    "jm-ms-http:server": "info"
+    "verifycode": "info"
   }
 }
