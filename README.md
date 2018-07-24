@@ -18,6 +18,6 @@ redis [] Redis数据库uri
 
 secret [''] 密钥
 
-verifyCodeKey ['verifycode'] Redis数据库主键
+verifycode_key ['verifycode'] Redis数据库主键
 
-verifyCodeExpire [60] 验证码过期时间, 单位秒(可选)
+verifycode_expire [60] 验证码过期时间, 单位秒(可选)
