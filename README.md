@@ -1,6 +1,6 @@
 # jm-verifycode
 
-verify code
+验证码生成与校验
 
 ## run:
 
@@ -12,7 +12,7 @@ npm run cluster
 
 ## config
 
-基本配置 请参考 [jm-server] (https://github.com/jm-root/jm-server)
+基本配置 请参考 [jm-server] (https://github.com/jm-root/ms/tree/master/packages/jm-server)
 
 redis [] Redis数据库uri
 

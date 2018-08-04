@@ -1,0 +1,80 @@
+openapi: 3.0.0
+# Added by API Auto Mocking Plugin
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/jm-root/jm-verifycode/1.0.0
+info:
+  version: "1.0.0"
+  title: jm-verifycode-api
+  description: 验证码系统API
+paths:
+  /{key}:
+    get:
+      description: 生成验证码
+      parameters:
+        - name: key
+          in: path
+          required: true
+          type: string
+        - name: length
+          in: query
+          type: integer
+          format: int32
+          description: 验证码长度
+          example: 6
+        - name: expire
+          in: query
+          type: integer
+          format: int32
+          description: 验证码有效期，单位秒
+          example: 60
+        - name: code
+          in: query
+          type: string
+          description: 指定验证码, 如果不指定，由系统自动生成
+      responses:
+        '200':
+          description: 验证码信息
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeInfo'
+  /{key}/verify:
+    get:
+      description: 检查验证码
+      parameters:
+        - name: key
+          in: path
+          required: true
+          type: string
+        - name: code
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: 结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CodeInfo'
+components:
+  schemas:
+    CodeInfo:
+      type: object
+      properties:
+        key:
+          type: string
+          example: 'test'
+        code:
+          type: string
+          example: '123456'
+        expire:
+          type: integer
+          format: int32
+          example: 60
+        time:
+          type: integer
+          format: int64
+          example: 1524634308844
+      description: 验证码信息
