@@ -1,29 +1,3 @@
 require('log4js').configure(require('path').join(__dirname, 'log4js.json'))
-var config = {
-  development: {
-    debug: true,
-    port: 3000,
-    lng: 'zh_CN',
-    modules: {
-      verifycode: {
-        module: process.cwd() + '/lib'
-      }
-    }
-  },
-  production: {
-    port: 80,
-    lng: 'zh_CN',
-    redis: 'redis://redis.db',
-    modules: {
-      verifycode: {
-        module: process.cwd() + '/lib'
-      }
-    }
-  }
-}
-
-var env = process.env.NODE_ENV || 'development'
-config = config[env] || config['development']
-config.env = env
-
+const config = require('config')
 module.exports = config
