@@ -6,19 +6,41 @@ beforeAll(async () => {
   service = $
 })
 
-let log = function (err, doc) {
-  if (err) console.error(err.stack)
-  if (doc) console.log(doc)
-}
-
 let key = 'test'
 describe('service', async () => {
-  test('add and check', async () => {
+  test('add and find', async () => {
+    let doc2 = await service.add({
+      key
+    })
+    doc = await service.find(key)
+    expect(doc.code === doc2.code).toBeTruthy()
+  })
+
+  test('add and verify', async () => {
     let doc = await service.add({
       key
     })
-    doc = await service.verify(key, doc.code)
-    expect(doc === true).toBeTruthy()
+    let doc2 = await service.verify(key, doc.code)
+    expect(doc.code === doc2.code).toBeTruthy()
+  })
+
+  test('add code and verify', async () => {
+    let doc = await service.add({
+      key,
+      code: '123'
+    })
+    expect(doc.code === '123').toBeTruthy()
+    let doc2 = await service.verify(key, doc.code)
+    expect(doc.code === doc2.code).toBeTruthy()
+  })
+
+  test('add and expire', async () => {
+    let doc = await service.add({
+      key,
+      expire: 1
+    })
+    console.log(doc)
+    expect(doc.expire === 1).toBeTruthy()
   })
 
   test('delete', async () => {
@@ -26,23 +48,11 @@ describe('service', async () => {
       key
     })
     await service.delete(key)
-    doc = await service.verify(key, doc.code)
-    expect(doc === false).toBeTruthy()
+    try {
+      doc = await service.verify(key, doc.code)
+    } catch (e) {
+      expect(e).toBeTruthy()
+    }
   })
 
-  test('expire', async () => {
-    let doc = await service.add({
-      key,
-      expire: 1
-    })
-    return new Promise(resolve => {
-      setTimeout(function () {
-        service.verify(key, doc.code)
-          .then(doc => {
-            expect(!doc).toBeTruthy()
-            resolve()
-          })
-      }, 1500)
-    })
-  })
 })

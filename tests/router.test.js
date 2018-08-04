@@ -1,32 +1,40 @@
-let expect = chai.expect
-const config = require('../config')
-const $ = require('../lib')
+const $ = require('./service')
 
-let log = function (err, doc) {
-  if (err) console.error(err.stack)
-  if (doc) console.log(doc)
-}
+let router = null
+beforeAll(async () => {
+  await $.onReady()
+  router = $.router()
+})
 
-let service = new $(config)
-let routerTest = service.router()
-describe('router', () => {
-  test('get', done => {
-    routerTest.get('/test', {id: 1}, function (err, doc) {
-      log(err, doc)
-      expect(err === null).toBeTruthy()
-      done()
-    })
+describe('router', async () => {
+  test('get', async () => {
+    let doc = await router.get('/test')
+    console.log(doc)
+    expect(doc).toBeTruthy()
   })
 
-  test('check', done => {
-    routerTest.get('/test', {id: 1}, function (err, doc) {
-      log(err, doc)
-      let code = doc.code
-      routerTest.get('/test/check', {code}, function (err, doc) {
-        log(err, doc)
-        expect(err === null).toBeTruthy()
-        done()
-      })
-    })
+  test('get lenth=4', async () => {
+    let doc = await router.get('/test', {length: 4})
+    console.log(doc)
+    expect(doc).toBeTruthy()
+  })
+
+  test('get code=123', async () => {
+    let doc = await router.get('/test', {code: '123'})
+    console.log(doc)
+    expect(doc.code === '123').toBeTruthy()
+  })
+
+  test('get expire=1', async () => {
+    let doc = await router.get('/test', {expire: 1})
+    console.log(doc)
+    expect(doc.expire === 1).toBeTruthy()
+  })
+
+  test('verify', async () => {
+    let doc = await router.get('/test')
+    let code = doc.code
+    doc = await router.get('/test/verify', {code})
+    expect(doc.code === code).toBeTruthy()
   })
 })
