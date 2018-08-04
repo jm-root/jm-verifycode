@@ -26,7 +26,7 @@
   "homepage": "https://github.com/jm-root/jm-verifycode",
   "dependencies": {
     "bluebird": "^3.5.1",
-    "jm-server": "^2.0.1",
+    "jm-server": "^2.0.5",
     "redis": "^2.7.1"
   },
   "devDependencies": {
