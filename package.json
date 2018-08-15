@@ -27,6 +27,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "config": "^2.0.1",
+    "jm-ms-wrapper": "^1.0.0",
     "jm-server": "^2.0.5",
     "redis": "^2.7.1"
   },
