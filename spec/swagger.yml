@@ -32,6 +32,11 @@ paths:
           in: query
           type: string
           description: 指定验证码, 如果不指定，由系统自动生成
+        - name: reuse
+          in: query
+          type: integer
+          format: int32
+          description: 如果之前的验证码未过期，则重复使用, 默认不重复使用, 如果code参数有值，忽略本选项
       responses:
         '200':
           description: 验证码信息

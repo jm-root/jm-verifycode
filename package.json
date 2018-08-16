@@ -1,6 +1,6 @@
 {
   "name": "jm-verifycode",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "verify code",
   "main": "./lib/index",
   "scripts": {
@@ -27,18 +27,16 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "config": "^2.0.1",
-    "jm-ms-wrapper": "^1.0.0",
+    "jm-ms-wrapper": "^1.0.1",
     "jm-server": "^2.0.5",
     "redis": "^2.7.1"
   },
   "devDependencies": {
     "benchmark": "^2.1.4",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-node": "^5.1.1",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
     "jest": "^22.4.3",
     "matcha": "^0.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
